@@ -19,11 +19,11 @@ router.get(
   middleware.authenticateUser,
   classController.handleGetAllClassWithTeacher,
 );
-// router.get(
-//   "/teacher-student",
-//   middleware.authenticateUser,
-//   classController.handleGetAllClassWithTeacherStudent,
-// );
+router.get(
+  "/teachers-students",
+  middleware.authenticateUser,
+  classController.handleGetAllClassWithTeacherStudent,
+);
 router.get(
   "/:id",
   middleware.authenticateUser,

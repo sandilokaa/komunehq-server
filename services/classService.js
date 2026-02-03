@@ -139,6 +139,35 @@ class ClassService {
 
   /* ------------------- End Handle Get All Class With Teacher ------------------- */
 
+  /* ------------------- Handle Get All Class With Teacher & Student ------------------- */
+
+  static async handleGetAllClassWithTeacherStudent() {
+    try {
+      const getClass =
+        await classRepository.handleGetAllClassWithTeacherStudent();
+
+      return {
+        status: true,
+        status_code: 200,
+        message: "Successfully displayed class",
+        data: {
+          class: getClass,
+        },
+      };
+    } catch (err) {
+      return {
+        status: false,
+        status_code: 500,
+        message: err.message,
+        data: {
+          class: null,
+        },
+      };
+    }
+  }
+
+  /* ------------------- End Handle Get All Class With Teacher & Student ------------------- */
+
   /* ------------------- Handle Get Class By Id  ------------------- */
 
   static async handleGetClassById({ id }) {

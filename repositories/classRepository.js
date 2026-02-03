@@ -107,6 +107,56 @@ class ClassRepository {
 
   /* ------------------- End Handle Get All Class With Teacher ------------------- */
 
+  /* ------------------- Handle Get All Class With Teacher Student ------------------- */
+
+  static async handleGetAllClassWithTeacherStudent() {
+    const query = {
+      attributes: ["id", "className", "gradeLevel"],
+      include: [
+        {
+          model: TeacherClass,
+          as: "teacherClasses",
+          attributes: ["id"],
+          require: false,
+          include: [
+            {
+              model: Teacher,
+              as: "teacher",
+              attributes: ["fullName", "teacherNumber", "subject"],
+              require: false,
+            },
+          ],
+        },
+        {
+          model: Student,
+          as: "students",
+          attributes: ["fullName", "studentNumber"],
+          require: false,
+        },
+      ],
+    };
+
+    const results = await Class.findAll(query);
+
+    return results.map((cls) => ({
+      className: cls.className,
+      gradeLevel: cls.gradeLevel,
+      teachers: (cls.teacherClasses || [])
+        .filter((tc) => tc.teacher !== null)
+        .map((tc) => ({
+          fullName: tc.teacher.fullName,
+          teacherNumber: tc.teacher.teacherNumber,
+          subject: tc.teacher.subject,
+        })),
+      students: (cls.students || []).map((student) => ({
+        fullName: student.fullName,
+        studentNumber: student.studentNumber,
+      })),
+    }));
+  }
+
+  /* ------------------- End Handle Get All Class With Teacher Student ------------------- */
+
   /* ------------------- Handle Get Class By Id  ------------------- */
 
   static async handleGetClassById({ id }) {
