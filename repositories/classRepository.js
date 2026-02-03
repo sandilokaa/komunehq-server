@@ -68,19 +68,41 @@ class ClassRepository {
         {
           model: Class,
           as: "class",
-          attributes: ["className", "gradeLevel"],
+          attributes: ["id", "className", "gradeLevel"],
         },
         {
           model: Teacher,
           as: "teacher",
-          attributes: ["fullName", "teacherNumber", "subject"],
+          attributes: ["id", "fullName", "teacherNumber", "subject"],
         },
       ],
     };
 
-    const getClass = await TeacherClass.findAll(query);
+    const results = await TeacherClass.findAll(query);
 
-    return getClass;
+    const groupedByClass = results.reduce((acc, item) => {
+      if (!item.class || !item.teacher) return acc;
+
+      const classId = item.class.id;
+
+      if (!acc[classId]) {
+        acc[classId] = {
+          className: item.class.className,
+          gradeLevel: item.class.gradeLevel,
+          teachers: [],
+        };
+      }
+
+      acc[classId].teachers.push({
+        fullName: item.teacher.fullName,
+        teacherNumber: item.teacher.teacherNumber,
+        subject: item.teacher.subject,
+      });
+
+      return acc;
+    }, {});
+
+    return Object.values(groupedByClass);
   }
 
   /* ------------------- End Handle Get All Class With Teacher ------------------- */
