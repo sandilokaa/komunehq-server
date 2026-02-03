@@ -1,5 +1,4 @@
 const { Student } = require("../models");
-const { Op } = require("sequelize");
 
 class StudentRepository {
   /* ------------------- Handle Create Student  ------------------- */

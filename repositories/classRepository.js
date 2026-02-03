@@ -1,5 +1,4 @@
-const { Class, Student } = require("../models");
-const { Op } = require("sequelize");
+const { Class, Student, sequelize } = require("../models");
 
 class ClassRepository {
   /* ------------------- Handle Create Class  ------------------- */
@@ -71,9 +70,22 @@ class ClassRepository {
   /* ------------------- Handle Delete Class By Id  ------------------- */
 
   static async handleDeleteClassById({ id }) {
-    const deletedClass = await Class.destroy({ where: { id } });
+    return await sequelize.transaction(async (t) => {
+      await Student.update(
+        { classId: null },
+        {
+          where: { classId: id },
+          transaction: t,
+        },
+      );
 
-    return deletedClass;
+      const deletedClass = await Class.destroy({
+        where: { id },
+        transaction: t,
+      });
+
+      return deletedClass;
+    });
   }
 
   /* ------------------- End Handle Delete Class By Id  ------------------- */

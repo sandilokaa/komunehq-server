@@ -9,6 +9,6 @@ const router = express.Router();
 router.use("/auth", authRoutes);
 router.use("/classes", classRoutes);
 router.use("/students", studentsRoutes);
-// router.use("/teachers", teacherRoutes);
+router.use("/teachers", teacherRoutes);
 
 module.exports = router;
