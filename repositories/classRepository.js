@@ -1,4 +1,10 @@
-const { Class, Student, sequelize } = require("../models");
+const {
+  Class,
+  Student,
+  TeacherClass,
+  Teacher,
+  sequelize,
+} = require("../models");
 
 class ClassRepository {
   /* ------------------- Handle Create Class  ------------------- */
@@ -51,6 +57,33 @@ class ClassRepository {
   }
 
   /* ------------------- End Handle Get All Class With Student ------------------- */
+
+  /* ------------------- Handle Get All Class With Teacher ------------------- */
+
+  static async handleGetAllClassWithTeacher() {
+    const query = {
+      where: {},
+      attributes: ["id"],
+      include: [
+        {
+          model: Class,
+          as: "class",
+          attributes: ["className", "gradeLevel"],
+        },
+        {
+          model: Teacher,
+          as: "teacher",
+          attributes: ["fullName", "teacherNumber", "subject"],
+        },
+      ],
+    };
+
+    const getClass = await TeacherClass.findAll(query);
+
+    return getClass;
+  }
+
+  /* ------------------- End Handle Get All Class With Teacher ------------------- */
 
   /* ------------------- Handle Get Class By Id  ------------------- */
 

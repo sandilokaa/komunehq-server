@@ -14,11 +14,11 @@ router.get(
   middleware.authenticateUser,
   classController.handleGetAllClassWithStudents,
 );
-// router.get(
-//   "/teacher",
-//   middleware.authenticateUser,
-//   classController.handleGetAllClassWithTeacher,
-// );
+router.get(
+  "/teachers",
+  middleware.authenticateUser,
+  classController.handleGetAllClassWithTeacher,
+);
 // router.get(
 //   "/teacher-student",
 //   middleware.authenticateUser,

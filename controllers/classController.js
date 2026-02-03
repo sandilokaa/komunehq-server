@@ -53,6 +53,21 @@ const handleGetAllClassWithStudents = async (req, res) => {
 
 /* ------------------- End Handle Get All Class With Student ------------------- */
 
+/* ------------------- Handle Get All Class With Teacher  ------------------- */
+
+const handleGetAllClassWithTeacher = async (req, res) => {
+  const { status, status_code, message, data } =
+    await classService.handleGetAllClassWithTeacher();
+
+  res.status(status_code).send({
+    status: status,
+    message: message,
+    data: data,
+  });
+};
+
+/* ------------------- End Handle Get All Class With Teacher ------------------- */
+
 /* ------------------- Handle Get Class By Id  ------------------- */
 
 const handleGetClassById = async (req, res) => {
@@ -116,6 +131,7 @@ module.exports = {
   handleCreateClass,
   handleGetAllClass,
   handleGetAllClassWithStudents,
+  handleGetAllClassWithTeacher,
   handleGetClassById,
   handleUpdateClassById,
   handleDeleteClassById,
