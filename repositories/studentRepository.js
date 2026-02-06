@@ -1,16 +1,18 @@
-const { Student } = require("../models");
+const { Student, Parent } = require("../models");
 
 class StudentRepository {
   /* ------------------- Handle Create Student  ------------------- */
 
   static async handleCreateStudent({
     userId,
+    parentId,
     classId,
     fullName,
     studentNumber,
   }) {
     const studentCreated = await Student.create({
       userId,
+      parentId,
       classId,
       fullName,
       studentNumber,
@@ -27,6 +29,13 @@ class StudentRepository {
     const query = {
       where: {},
       attributes: ["id", "classId", "fullName", "studentNumber"],
+      include: [
+        {
+          model: Parent,
+          as: "parent",
+          attributes: ["fullName", "occupation"],
+        },
+      ],
     };
 
     const getStudent = await Student.findAll(query);
@@ -41,7 +50,7 @@ class StudentRepository {
   static async handleGetStudentById({ id }) {
     const query = {
       where: { id },
-      attributes: ["id", "classId", "fullName", "studentNumber"],
+      attributes: ["id", "parentId", "classId", "fullName", "studentNumber"],
     };
 
     const getStudentById = Student.findOne(query);
@@ -66,12 +75,14 @@ class StudentRepository {
   static async handleUpdateStudentById({
     id,
     classId,
+    parentId,
     fullName,
     studentNumber,
   }) {
     const updatedStudent = await Student.update(
       {
         classId,
+        parentId,
         fullName,
         studentNumber,
       },

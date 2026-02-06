@@ -6,6 +6,7 @@ class StudentService {
 
   static async handleCreateStudent({
     userId,
+    parentId,
     classId,
     fullName,
     studentNumber,
@@ -14,6 +15,7 @@ class StudentService {
       // ------------------------- Payload Validation ------------------------- //
       const requiredFields = {
         classId,
+        parentId,
         fullName,
         studentNumber,
       };
@@ -34,6 +36,7 @@ class StudentService {
 
       const studentCreated = await studentRepository.handleCreateStudent({
         userId,
+        parentId,
         classId,
         fullName,
         studentNumber,
@@ -154,6 +157,7 @@ class StudentService {
   static async handleUpdateStudentById({
     id,
     classId,
+    parentId,
     fullName,
     studentNumber,
   }) {
@@ -164,6 +168,7 @@ class StudentService {
 
       if (getStudentById.id == id) {
         if (!classId) classId = getStudentById.classId;
+        if (!parentId) parentId = getStudentById.parentId;
         if (!fullName) fullName = getStudentById.fullName;
         if (!studentNumber) studentNumber = getStudentById.studentNumber;
       }
@@ -171,6 +176,7 @@ class StudentService {
       const updatedStudent = await studentRepository.handleUpdateStudentById({
         id,
         classId,
+        parentId,
         fullName,
         studentNumber,
       });

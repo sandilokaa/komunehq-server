@@ -5,11 +5,12 @@ const studentService = require("../services/studentService");
 const handleCreateStudent = async (req, res) => {
   const userId = req.user.id;
 
-  const { classId, fullName, studentNumber } = req.body;
+  const { parentId, classId, fullName, studentNumber } = req.body;
 
   const { status, status_code, message, data } =
     await studentService.handleCreateStudent({
       userId,
+      parentId,
       classId,
       fullName,
       studentNumber,
@@ -80,12 +81,13 @@ const handleDeleteStudentById = async (req, res) => {
 const handleUpdateStudentById = async (req, res) => {
   const { id } = req.params;
 
-  const { classId, fullName, studentNumber } = req.body;
+  const { classId, parentId, fullName, studentNumber } = req.body;
 
   const { status, status_code, message, data } =
     await studentService.handleUpdateStudentById({
       id,
       classId,
+      parentId,
       fullName,
       studentNumber,
     });
