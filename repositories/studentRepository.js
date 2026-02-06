@@ -28,14 +28,7 @@ class StudentRepository {
   static async handleGetAllStudent() {
     const query = {
       where: {},
-      attributes: ["id", "classId", "fullName", "studentNumber"],
-      include: [
-        {
-          model: Parent,
-          as: "parent",
-          attributes: ["fullName", "occupation"],
-        },
-      ],
+      attributes: ["id", "classId", "parentId", "fullName", "studentNumber"],
     };
 
     const getStudent = await Student.findAll(query);

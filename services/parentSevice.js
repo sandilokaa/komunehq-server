@@ -81,6 +81,34 @@ class ParentService {
 
   /* ------------------- End Handle Get All Parent  ------------------- */
 
+  /* ------------------- Handle Get All Parent With Students ------------------- */
+
+  static async handleGetAllParentStudent() {
+    try {
+      const getParent = await parentRepository.handleGetAllParentStudent();
+
+      return {
+        status: true,
+        status_code: 200,
+        message: "Successfully displayed parent",
+        data: {
+          parent: getParent,
+        },
+      };
+    } catch (err) {
+      return {
+        status: false,
+        status_code: 500,
+        message: err.message,
+        data: {
+          parent: null,
+        },
+      };
+    }
+  }
+
+  /* ------------------- End Handle Get All Parent With Student ------------------- */
+
   /* ------------------- Handle Get Parent By Id  ------------------- */
 
   static async handleGetParentById({ id }) {

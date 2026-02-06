@@ -30,6 +30,28 @@ class ParentRepository {
 
   /* ------------------- End Handle Get All Parent  ------------------- */
 
+  /* ------------------- Handle Get All Parent With Student ------------------- */
+
+  static async handleGetAllParentStudent() {
+    const query = {
+      where: {},
+      attributes: ["id", "fullName", "occupation"],
+      include: [
+        {
+          model: Student,
+          as: "students",
+          attributes: ["fullName", "studentNumber"],
+        },
+      ],
+    };
+
+    const getParent = await Parent.findAll(query);
+
+    return getParent;
+  }
+
+  /* ------------------- End Handle Get All Parent With Student ------------------- */
+
   /* ------------------- Handle Get Parent By Id  ------------------- */
 
   static async handleGetParentById({ id }) {

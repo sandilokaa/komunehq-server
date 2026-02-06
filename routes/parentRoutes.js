@@ -14,6 +14,11 @@ router.get(
   parentController.handleGetAllParent,
 );
 router.get(
+  "/students",
+  middleware.authenticateUser,
+  parentController.handleGetAllParentStudent,
+);
+router.get(
   "/:id",
   middleware.authenticateUser,
   parentController.handleGetParentById,

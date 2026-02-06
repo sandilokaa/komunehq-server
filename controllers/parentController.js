@@ -38,6 +38,21 @@ const handleGetAllParent = async (req, res) => {
 
 /* ------------------- End Handle Get All Parent  ------------------- */
 
+/* ------------------- Handle Get All Parent Student  ------------------- */
+
+const handleGetAllParentStudent = async (req, res) => {
+  const { status, status_code, message, data } =
+    await parentService.handleGetAllParentStudent();
+
+  res.status(status_code).send({
+    status: status,
+    message: message,
+    data: data,
+  });
+};
+
+/* ------------------- End Handle Get All Parent Student  ------------------- */
+
 /* ------------------- Handle Get Parent By Id  ------------------- */
 
 const handleGetParentById = async (req, res) => {
@@ -100,6 +115,7 @@ const handleUpdateParentById = async (req, res) => {
 module.exports = {
   handleCreateParent,
   handleGetAllParent,
+  handleGetAllParentStudent,
   handleGetParentById,
   handleUpdateParentById,
   handleDeleteParentById,
